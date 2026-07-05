@@ -1,0 +1,31 @@
+# Biometric Authentication Demo - dependencies
+# Tested on Python 3.14, CPU-only (no GPU required)
+#
+# Core (usually pre-installed)
+numpy
+scipy
+pandas
+scikit-learn
+matplotlib
+pillow
+onnxruntime
+
+# Torch stack (install torch first, then torchvision matching the torch version)
+# Example: pip install torch==2.9.1 ; pip install --no-deps torchvision==0.24.1
+torch
+torchvision
+
+# App + vision
+streamlit
+opencv-python-headless
+scikit-image
+
+# Face recognition (install with --no-deps to avoid the numpy<2 pin conflict)
+# pip install --no-deps facenet-pytorch
+facenet-pytorch
+
+# Template protection (fuzzy commitment)
+reedsolo
+
+# FLOPs / params measurement
+thop
