@@ -20,6 +20,190 @@ from PIL import Image
 st.set_page_config(page_title="Biometric Auth Demo", layout="wide",
                    page_icon="🔐")
 
+# ---------------------------------------------------------------------------
+# Premium Custom Styling & Effects
+# ---------------------------------------------------------------------------
+def inject_custom_css():
+    st.markdown(
+        """
+        <style>
+        /* Google Fonts Import */
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        /* Root Variables */
+        :root {
+            --bg-dark: #05070D;
+            --card-bg: #0B0F19;
+            --purple-start: #6C63FF;
+            --purple-end: #8E44FF;
+            --green-accent: #00C853;
+            --text-light: #E2E8F0;
+            --text-muted: #94A3B8;
+        }
+
+        /* Apply Outfit Font globally */
+        html, body, [class*="css"], .stMarkdown, p, span, label, input, button {
+            font-family: 'Outfit', sans-serif !important;
+        }
+
+        /* App Background */
+        .stApp {
+            background-color: var(--bg-dark) !important;
+            color: var(--text-light) !important;
+        }
+
+        /* Sidebar Styling */
+        section[data-testid="stSidebar"] {
+            background-color: #080B12 !important;
+            border-right: 1px solid rgba(108, 99, 255, 0.15) !important;
+        }
+        
+        section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p {
+            color: var(--text-light) !important;
+        }
+
+        /* Custom Card/Columns Styling */
+        div[data-testid="column"] {
+            background: var(--card-bg) !important;
+            border: 1px solid rgba(108, 99, 255, 0.15) !important;
+            border-radius: 16px !important;
+            padding: 24px !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        /* Lift cards 6px, add glowing shadow and dynamic border color on hover */
+        div[data-testid="column"]:hover {
+            transform: translateY(-6px) !important;
+            border-color: var(--purple-start) !important;
+            box-shadow: 0 16px 40px rgba(108, 99, 255, 0.25), 0 0 20px rgba(108, 99, 255, 0.1) !important;
+        }
+
+        /* Accent green custom styles */
+        .glow-green {
+            box-shadow: 0 0 15px rgba(0, 200, 83, 0.3) !important;
+            border-color: var(--green-accent) !important;
+        }
+
+        /* Premium Buttons with Gradient & Glow */
+        div.stButton > button {
+            background: linear-gradient(135deg, var(--purple-start) 0%, var(--purple-end) 100%) !important;
+            color: #FFFFFF !important;
+            border: none !important;
+            border-radius: 10px !important;
+            padding: 12px 28px !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.5px !important;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3) !important;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+            width: auto !important;
+        }
+
+        div.stButton > button:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 0 8px 25px rgba(142, 68, 255, 0.5), 0 0 15px rgba(108, 99, 255, 0.3) !important;
+            background: linear-gradient(135deg, var(--purple-end) 0%, var(--purple-start) 100%) !important;
+            color: #FFFFFF !important;
+        }
+
+        div.stButton > button:active {
+            transform: translateY(1px) !important;
+        }
+
+        /* File Uploader Custom Styling */
+        div[data-testid="stFileUploader"] {
+            background: #080B12 !important;
+            border: 2px dashed rgba(108, 99, 255, 0.25) !important;
+            border-radius: 14px !important;
+            padding: 20px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        div[data-testid="stFileUploader"]:hover {
+            border-color: var(--purple-start) !important;
+            background: #0c0f1a !important;
+            box-shadow: 0 0 15px rgba(108, 99, 255, 0.15) !important;
+        }
+
+        /* Metrics Styling - Glow Green & Gradients */
+        div[data-testid="stMetricValue"] {
+            font-weight: 800 !important;
+            background: linear-gradient(135deg, var(--green-accent) 0%, var(--purple-start) 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            font-size: 2.2rem !important;
+        }
+
+        /* Tabs Selection Styling */
+        button[data-baseweb="tab"] {
+            background-color: transparent !important;
+            color: var(--text-muted) !important;
+            border: none !important;
+            border-bottom: 2px solid transparent !important;
+            font-weight: 500 !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease !important;
+            padding: 10px 20px !important;
+        }
+
+        button[data-baseweb="tab"]:hover {
+            color: var(--text-light) !important;
+        }
+
+        button[data-baseweb="tab"][aria-selected="true"] {
+            color: #FFFFFF !important;
+            border-bottom: 3px solid var(--purple-end) !important;
+            background: linear-gradient(0deg, rgba(142, 68, 255, 0.08) 0%, rgba(142, 68, 255, 0) 100%) !important;
+        }
+
+        /* Inputs & Dropdowns */
+        div[data-baseweb="select"], div[data-baseweb="input"], input {
+            background-color: #080B12 !important;
+            border: 1px solid rgba(108, 99, 255, 0.2) !important;
+            border-radius: 10px !important;
+            color: var(--text-light) !important;
+        }
+
+        /* Success & Info boxes styled with matching gradients */
+        div[class*="stAlert"] {
+            background-color: #091311 !important;
+            border: 1px solid rgba(0, 200, 83, 0.2) !important;
+            border-left: 5px solid var(--green-accent) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 15px rgba(0, 200, 83, 0.05) !important;
+        }
+
+        div[class*="stAlert"]:has([class*="stIconError"]) {
+            background-color: #190B0B !important;
+            border: 1px solid rgba(255, 51, 51, 0.2) !important;
+            border-left: 5px solid #FF3333 !important;
+            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.05) !important;
+        }
+        
+        /* Custom card class for manual wrap */
+        .premium-info-card {
+            background: linear-gradient(135deg, #0B0F19 0%, #111625 100%) !important;
+            border: 1px solid rgba(108, 99, 255, 0.15) !important;
+            border-radius: 16px !important;
+            padding: 24px !important;
+            margin: 16px 0 !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        }
+        .premium-info-card:hover {
+            transform: translateY(-6px) !important;
+            border-color: var(--purple-start) !important;
+            box-shadow: 0 16px 40px rgba(108, 99, 255, 0.2), 0 0 20px rgba(108, 99, 255, 0.1) !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+inject_custom_css()
+
 PAGES = [
     "Home - Live Verification",
     "Feature Extraction (S1)",
@@ -92,14 +276,19 @@ def page_home():
                 except Exception as e:
                     st.error(f"Could not verify: {e}")
 
-    st.markdown("---")
-    st.markdown("### Why this matters")
     st.markdown(
-        "In the original project the 'Face Authentication' page waited 2 seconds "
-        "and showed hardcoded `98.7%` regardless of the image. The `/login` "
-        "endpoint only checked username+password and never compared faces. "
-        "Above, the cosine similarity is computed from a real FaceNet embedding "
-        "every time - upload a different person's face and the score drops.")
+        """
+        <div class="premium-info-card">
+            <h3>Why this matters</h3>
+            <p>In the original project, the 'Face Authentication' page waited 2 seconds 
+            and showed a hardcoded <code>98.7%</code> score regardless of the image. The <code>/login</code> 
+            endpoint only checked username+password and never actually compared faces.</p>
+            <p>Here, the cosine similarity is computed from a real FaceNet embedding 
+            every time - upload a different person's face and the score drops accordingly.</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -182,12 +371,15 @@ def page_feature_extraction():
         st.markdown("### Handcrafted vs deep - methods demonstrated here")
         st.dataframe(feature_comparison_table(), use_container_width=True)
         st.markdown(
-            "**Survey task (Student 1):** expand this into a 15+ paper table "
-            "with columns: dataset, method, accuracy, advantages, limitations. "
-            "Seed references: minutiae (NIST NBIS), Gabor (Hong et al. 1998), "
-            "LBP (Ahonen et al. 2006), SIFT (Lowe 2004), FaceNet (Schroff 2015), "
-            "DeepPrint (Engelsma 2021), FingerNet (Tang 2017), "
-            "pyfing/SNFEN (Cappelli 2025).")
+            """
+            <div class="premium-info-card">
+                <h4>📚 Survey Task (Student 1)</h4>
+                <p>Expand this into a 15+ paper table with columns: <strong>dataset, method, accuracy, advantages, limitations</strong>.</p>
+                <p><em>Seed references:</em> minutiae (NIST NBIS), Gabor (Hong et al. 1998), LBP (Ahonen et al. 2006), SIFT (Lowe 2004), FaceNet (Schroff 2015), DeepPrint (Engelsma 2021), FingerNet (Tang 2017), pyfing/SNFEN (Cappelli 2025).</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -266,12 +458,14 @@ def page_template_protection():
     st.subheader("Comparison of schemes")
     st.dataframe(tp.protection_comparison_table(), use_container_width=True)
     st.markdown(
-        "**Survey task (Student 2):** expand to 15-20 papers. Seed refs: "
-        "BioHashing (Teoh 2004), IoM (Jin 2018), Bloom (Rathgeb 2013), "
-        "Fuzzy commitment (Juels 2002), Fuzzy vault (Juels 2002), "
-        "Homomorphic encryption for biometrics, "
-        "Otroshi et al. 2025 (Springer benchmark), "
-        "BioDeepHash (IEEE TDSC 2026), ISO/IEC 24745.")
+        """
+        <div class="premium-info-card">
+            <h4>📚 Survey Task (Student 2)</h4>
+            <p>Expand to 15-20 papers. <em>Seed refs:</em> BioHashing (Teoh 2004), IoM (Jin 2018), Bloom (Rathgeb 2013), Fuzzy commitment (Juels 2002), Fuzzy vault (Juels 2002), Homomorphic encryption for biometrics, Otroshi et al. 2025 (Springer benchmark), BioDeepHash (IEEE TDSC 2026), ISO/IEC 24745.</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -318,11 +512,14 @@ def page_deep_models():
     st.subheader("2026 landscape (cited - for the survey table)")
     st.dataframe(landscape_table(), use_container_width=True)
     st.markdown(
-        "**Survey task (Student 3):** expand to 15+ papers with FLOPs, params, "
-        "accuracy, inference time. Seed refs: FaceNet (Schroff 2015), "
-        "ArcFace (Deng 2019), AdaFace (Kim 2022), MagFace (Meng 2021), "
-        "EdgeFace (Boutros 2023), MobileNet (Howard 2017), "
-        "ViT (Dosovitskiy 2021), NPTFace (CVPR 2026), FunFace (2026).")
+        """
+        <div class="premium-info-card">
+            <h4>📚 Survey Task (Student 3)</h4>
+            <p>Expand to 15+ papers with FLOPs, params, accuracy, inference time. <em>Seed refs:</em> FaceNet (Schroff 2015), ArcFace (Deng 2019), AdaFace (Kim 2022), MagFace (Meng 2021), EdgeFace (Boutros 2023), MobileNet (Howard 2017), ViT (Dosovitskiy 2021), NPTFace (CVPR 2026), FunFace (2026).</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -382,12 +579,14 @@ def page_attacks_liveness():
         st.markdown("### Liveness / anti-spoofing methods compared")
         st.dataframe(defence_comparison_table(), use_container_width=True)
         st.markdown(
-            "**Survey task (Student 4):** 15+ papers. Seed refs: "
-            "Silent-Face-Anti-Spoofing/MiniFASNet (Yu 2020), "
-            "CASIA-FASD / Replay-Attack datasets, "
-            "Deepfake detection (Rossler 2019 FaceForensics++), "
-            "adversarial attacks on face recognition (Dong 2019), "
-            "rPPG liveness (Poh 2010), presentation attack taxonomy (ISO 30107).")
+            """
+            <div class="premium-info-card">
+                <h4>📚 Survey Task (Student 4)</h4>
+                <p>Expand to 15+ papers. <em>Seed refs:</em> Silent-Face-Anti-Spoofing/MiniFASNet (Yu 2020), CASIA-FASD / Replay-Attack datasets, Deepfake detection (Rossler 2019 FaceForensics++), adversarial attacks on face recognition (Dong 2019), rPPG liveness (Poh 2010), presentation attack taxonomy (ISO 30107).</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 
 # ---------------------------------------------------------------------------
